@@ -1,0 +1,14 @@
+{
+  "name": "expense-tracker",
+  "version": "1.0.0",
+  "description": "CLI tool for tracking your expenses",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oskahon",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.13.5"
+  }
+}
