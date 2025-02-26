@@ -1,4 +1,26 @@
-console.log('Welcome to using the Expense Tracker');
+const { Command } = require('commander');
+const program = new Command();
+
+program.command('add')
+    .name('add')
+    .option('-t --test')
+    .argument('<name>', 'Name of expense')
+    .argument('[amount]', 'Amount paid for expense', '5')
+    .action((name, amount, options) => {
+        if (options.test) {
+            console.log('test!');
+        }
+        console.log(`Added ${name} - ${amount}e`);
+    });
+
+program.command('delete')
+    .name('delete')
+    .argument('<id>')
+    .action((str) => {
+        console.log(`Delete: ${str}`);
+    });
+
+program.parse();
 
 //** The Plan */
 // 1. Look into commander.js library
