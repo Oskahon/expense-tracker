@@ -1,15 +1,13 @@
-const { Command } = require('commander');
+const { Command, Option } = require('commander');
 const program = new Command();
 
 program.command('add')
     .name('add')
-    .option('-t --test')
+    .option('-c [type]')
     .argument('<name>', 'Name of expense')
     .argument('[amount]', 'Amount paid for expense', '5')
     .action((name, amount, options) => {
-        if (options.test) {
-            console.log('test!');
-        }
+        console.log(options);
         console.log(`Added ${name} - ${amount}e`);
     });
 
@@ -19,6 +17,10 @@ program.command('delete')
     .action((str) => {
         console.log(`Delete: ${str}`);
     });
+
+program.command('test')
+    .option('-a')
+    .addOption(new Option('-b').conflicts('a'));
 
 program.parse();
 
