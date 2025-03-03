@@ -2,27 +2,45 @@ const { Command, Option } = require('commander');
 const program = new Command();
 
 program.command('add')
-    .name('add')
-    .option('-c [type]')
+    .description('Add expense')
     .argument('<name>', 'Name of expense')
     .argument('[amount]', 'Amount paid for expense', '5')
-    .action((name, amount, options) => {
-        console.log(options);
+    .action((name, amount) => {
         console.log(`Added ${name} - ${amount}e`);
     });
 
-program.command('delete')
-    .name('delete')
-    .argument('<id>')
-    .action((str) => {
-        console.log(`Delete: ${str}`);
+program.command('list')
+    .description('List expenses')
+    .argument('<items...>')
+    .action((items) => {
+        items.forEach(item => {
+            console.log(item);
+        });
     });
 
-program.command('test')
-    .option('-a')
-    .addOption(new Option('-b').conflicts('a'));
+program.command('delete')
+    .description('Delete item')
+    .argument('<id>', 'expense id', parseInt)
+    .action((id) => {
+        if (isNaN(id)) {
+            console.error('Not a number');
+            return;
+        }
+        console.log('deleted %s', id);
+    });
+
 
 program.parse();
+
+function printExpenses() {
+    console.log();
+    console.log('Your expenses:');
+    console.log();
+    console.log('\t- Food \t\t 20e');
+    console.log('\t- Coffee \t 8e');
+    console.log('\t- Ice Cream \t 5e');
+    console.log();
+}
 
 //** The Plan */
 // 1. Look into commander.js library
