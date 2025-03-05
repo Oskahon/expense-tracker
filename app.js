@@ -1,4 +1,5 @@
-const { Command, Option } = require('commander');
+const { Command } = require('commander');
+const expenses = require('./src/expenses');
 const program = new Command();
 
 program.command('add')
@@ -11,10 +12,9 @@ program.command('add')
 
 program.command('list')
     .description('List expenses')
-    .argument('<items...>')
-    .action((items) => {
-        items.forEach(item => {
-            console.log(item);
+    .action(() => {
+        expenses.listExpenses().forEach(expense => {
+            console.log(`${expense.description} - ${expense.price}`);
         });
     });
 
