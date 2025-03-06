@@ -4,10 +4,15 @@ const program = new Command();
 
 program.command('add')
     .description('Add expense')
-    .argument('<name>', 'Name of expense')
-    .argument('[amount]', 'Amount paid for expense', '5')
-    .action((name, amount) => {
-        console.log(`Added ${name} - ${amount}e`);
+    .argument('<description>', 'Name of expense')
+    .argument('<price>', 'Amount paid for expense')
+    .action((description, price) => {
+        try {
+            const expense = expenses.writeExpense(description, price);
+            console.log(`Added ${expense.description} - ${expense.price}e`);
+        } catch (error) {
+            console.error(error.message);
+        }
     });
 
 program.command('list')
@@ -31,16 +36,6 @@ program.command('delete')
 
 
 program.parse();
-
-function printExpenses() {
-    console.log();
-    console.log('Your expenses:');
-    console.log();
-    console.log('\t- Food \t\t 20e');
-    console.log('\t- Coffee \t 8e');
-    console.log('\t- Ice Cream \t 5e');
-    console.log();
-}
 
 //** The Plan */
 // 1. Look into commander.js library

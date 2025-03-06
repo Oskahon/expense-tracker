@@ -8,8 +8,9 @@ const expenses = [
 ];
 
 
-function writeExpense(expense) {
-    return expense.length;
+function writeExpense(description, price) {
+    const expense = new Expense(description, price);
+    return expense;
 }
 
 async function readExpense() {

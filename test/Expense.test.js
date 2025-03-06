@@ -18,6 +18,18 @@ test('Handles zero price', () => {
     expect(new Expense('test', 0)).toEqual(testExpense);
 });
 
+test('Description must be defined', () => {
+    expect(() => new Expense(5)).toThrow('description and price are required');
+});
+
+test('Price must be defined', () => {
+    expect(() => new Expense('test')).toThrow('description and price are required');
+});
+
+test('Price and Description must be defined', () => {
+    expect(() => new Expense()).toThrow('description and price are required');
+});
+
 test('Empty description throws error', () => {
     expect(() => new Expense('', 5)).toThrow('missing description');
 });

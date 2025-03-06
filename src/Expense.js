@@ -1,5 +1,8 @@
 class Expense {
     constructor(description, price) {
+        if (description === undefined || price === undefined) {
+            throw new Error('description and price are required');
+        }
         if (description === '') {
             throw new Error('missing description');
         }
