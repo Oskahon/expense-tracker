@@ -1,0 +1,27 @@
+const Expense = require("../src/Expense");
+
+test('Creates Expense as expected', () => {
+    const testExpense = {
+        description: 'test',
+        price: 5,
+    };
+
+    expect(new Expense('test', 5)).toEqual(testExpense);
+});
+
+test('Handles zero price', () => {
+    const testExpense = {
+        description: 'test',
+        price: 0,
+    };
+
+    expect(new Expense('test', 0)).toEqual(testExpense);
+});
+
+test('Empty description throws error', () => {
+    expect(() => new Expense('', 5)).toThrow('missing description');
+});
+
+test('Negative price throws error', () => {
+    expect(() => new Expense('test', -5)).toThrow('price must be positive');
+});
