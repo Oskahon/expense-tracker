@@ -1,5 +1,6 @@
 const { Command } = require('commander');
-const expenses = require('./src/expenses');
+const expenseStorage = require('./src/expenseStorage');
+const Expense = require('./src/Expense');
 const program = new Command();
 
 program.command('add')
@@ -7,12 +8,8 @@ program.command('add')
     .argument('<description>', 'Name of expense')
     .argument('<price>', 'Amount paid for expense')
     .action((description, price) => {
-        try {
-            const expense = expenses.writeExpense(description, price);
-            console.log(`Added ${expense.description} - ${expense.price}e`);
-        } catch (error) {
-            console.error(error.message);
-        }
+        const expenses = [new Expense(description, price)];
+        expenseStorage.writeExpenses('./expenses.json', expenses);
     });
 
 program.command('list')
