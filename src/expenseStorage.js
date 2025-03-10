@@ -9,7 +9,6 @@ const expenses = [
     new Expense('Milksteak', 3),
 ];
 
-
 function writeExpenses(filePath, expenses) {
     try {
         const directory = path.dirname(filePath);
@@ -22,14 +21,25 @@ function writeExpenses(filePath, expenses) {
     } catch (error) {
         return { error: `Failed to write expenses: ${error.message}` };
     }
-
-    // Write expense to file
-
 }
 
-async function readExpense() {
-    const expense = new Expense('coffee', 8);
-    return expense;
+function readExpenses(filePath) {
+    try {
+        if (!fs.existsSync(filePath)) {
+            return { expenses: [] };
+        }
+
+        const data = fs.readFileSync(filePath, 'utf-8');
+
+        const expenses = JSON.parse(data);
+        if (!Array.isArray(expenses)) {
+            return { error: 'Invalid expense file format' };
+        }
+
+        return { expenses };
+    } catch (error) {
+        return { error: `Failed to read expenses: ${error.message}` };
+    }
 }
 
 function listExpenses() {
@@ -38,6 +48,6 @@ function listExpenses() {
 
 module.exports = {
     writeExpenses,
-    readExpense,
+    readExpenses,
     listExpenses,
 };

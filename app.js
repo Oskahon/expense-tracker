@@ -3,21 +3,45 @@ const expenseStorage = require('./src/expenseStorage');
 const Expense = require('./src/Expense');
 const program = new Command();
 
+const FILEPATH = './expenses.json';
+
 program.command('add')
     .description('Add expense')
     .argument('<description>', 'Name of expense')
     .argument('<price>', 'Amount paid for expense')
     .action((description, price) => {
-        const expenses = [new Expense(description, price)];
-        expenseStorage.writeExpenses('./expenses.json', expenses);
+        let result = expenseStorage.readExpenses(FILEPATH);
+        if (result.error) {
+            console.error(result.error);
+            return;
+        }
+
+        const expenses = result.expenses;
+        expenses.push(new Expense(description, price));
+
+        result = expenseStorage.writeExpenses(FILEPATH, expenses);
+        if (result.error) {
+            console.error(result.error);
+            return;
+        }
     });
 
 program.command('list')
     .description('List expenses')
     .action(() => {
-        expenses.listExpenses().forEach(expense => {
-            console.log(`${expense.description} - ${expense.price}`);
-        });
+        let result = expenseStorage.readExpenses(FILEPATH);
+
+        if (result.error) {
+            console.error(result.error);
+            return;
+        }
+
+        if (result.expenses.length === 0) {
+            console.log('No expenses were found.');
+            return;
+        }
+
+        console.table(result.expenses);
     });
 
 program.command('delete')
