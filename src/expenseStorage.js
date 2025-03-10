@@ -2,13 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const Expense = require("./Expense");
 
-const expenses = [
-    new Expense('Food', 10),
-    new Expense('Coffee', 8),
-    new Expense('Cookies', 4),
-    new Expense('Milksteak', 3),
-];
-
 function writeExpenses(filePath, expenses) {
     try {
         const directory = path.dirname(filePath);
@@ -42,12 +35,7 @@ function readExpenses(filePath) {
     }
 }
 
-function listExpenses() {
-    return expenses;
-}
-
 module.exports = {
     writeExpenses,
     readExpenses,
-    listExpenses,
 };
