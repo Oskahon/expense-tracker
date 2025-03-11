@@ -12,6 +12,7 @@ class Expense {
 
         this.description = description;
         this.price = price;
+        this.timestamp = Date.now();
     }
 }
 
