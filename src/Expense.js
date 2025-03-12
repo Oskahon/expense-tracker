@@ -1,5 +1,5 @@
 class Expense {
-    constructor(description, price) {
+    constructor(description, price, timestamp = Date.now()) {
         if (description === undefined || price === undefined) {
             throw new Error('description and price are required');
         }
@@ -12,7 +12,27 @@ class Expense {
 
         this.description = description;
         this.price = price;
-        this.timestamp = Date.now();
+        this.timestamp = timestamp;
+    }
+
+    static parseMonth(timestamp) {
+        const time = new Date(timestamp);
+        const months = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ];
+
+        return months[time.getMonth()];
     }
 }
 

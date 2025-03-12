@@ -42,6 +42,9 @@ program.command('list')
         }
 
         console.table(result.expenses);
+        result.expenses.forEach(expense => {
+            console.log(Expense.parseMonth(expense.timestamp));
+        });
     });
 
 program.command('delete')
@@ -77,25 +80,6 @@ program.command('delete')
 
 program.parse();
 
-function parseMonth(date) {
-    const months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ];
-
-    return months[date.getMonth()];
-}
-
 //** The Plan */
 //// 1. Look into commander.js library
 //// 2. Create a list of command and what they are supposed to do
@@ -106,10 +90,6 @@ function parseMonth(date) {
 ////      - Parse flags and data from arguments
 //      - Create functionality for the commands
 ////      - Create a help functionality that explains the app usage
-
-// TODO
-// Add timestamps to expenses
-// Parse Month from timestamps
 
 //** Commands */
 //// add - Add an expense
