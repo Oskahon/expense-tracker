@@ -24,10 +24,11 @@ function readExpenses(filePath) {
 
         const data = fs.readFileSync(filePath, 'utf-8');
 
-        const expenses = JSON.parse(data);
+        let expenses = JSON.parse(data);
         if (!Array.isArray(expenses)) {
             return { error: 'Invalid expense file format' };
         }
+        expenses = expenses.map(expense => new Expense(expense.description, expense.price, expense.timestamp));
 
         return { expenses };
     } catch (error) {

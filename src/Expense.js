@@ -15,8 +15,8 @@ class Expense {
         this.timestamp = timestamp;
     }
 
-    static parseMonth(timestamp) {
-        const time = new Date(timestamp);
+    parseMonth() {
+        const time = new Date(this.timestamp);
         const months = [
             'January',
             'February',

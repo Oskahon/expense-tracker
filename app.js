@@ -42,9 +42,6 @@ program.command('list')
         }
 
         console.table(result.expenses);
-        result.expenses.forEach(expense => {
-            console.log(Expense.parseMonth(expense.timestamp));
-        });
     });
 
 program.command('delete')
@@ -62,12 +59,13 @@ program.command('delete')
             return;
         }
 
-        let expenses = result.expenses;
-        const removed = expenses.splice(id, 1);
-        if (removed.length === 0) {
+        if (id > result.expenses.length) {
             console.error('Expense not found');
             return;
         }
+
+        let expenses = result.expenses;
+        expenses.splice(id, 1);
 
         result = expenseStorage.writeExpenses(FILEPATH, expenses);
         if (result.error) {

@@ -1,5 +1,8 @@
 const Expense = require("../src/Expense");
 
+// TODO
+// Add tests for parseMonth
+
 test('Creates Expense as expected', () => {
     const testExpense = {
         description: 'test',
