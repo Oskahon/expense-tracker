@@ -8,8 +8,13 @@ const FILEPATH = './expenses.json';
 program.command('add')
     .description('Add expense')
     .argument('<description>', 'Name of expense')
-    .argument('<price>', 'Amount paid for expense')
+    .argument('<price>', 'Amount paid for expense', parseFloat)
     .action((description, price) => {
+        if (isNaN(price)) {
+            console.error('Price must be a number');
+            return;
+        }
+
         let result = expenseStorage.readExpenses(FILEPATH);
         if (result.error) {
             console.error(result.error);
@@ -79,10 +84,14 @@ program.command('update')
     .description('Update expense')
     .argument('<id>', 'Expense id', parseInt)
     .argument('<description>', 'Name of expense')
-    .argument('<price>', 'Amount paid for expense')
+    .argument('<price>', 'Amount paid for expense', parseFloat)
     .action((id, description, price) => {
         if (isNaN(id)) {
             console.log('Id must be a number');
+            return;
+        }
+        if (isNaN(price)) {
+            console.error('Price must be a number');
             return;
         }
 
@@ -124,7 +133,7 @@ program.parse();
 
 //** Commands */
 //// add - Add an expense
-// update - Update an expense
+//// update - Update an expense
 //// delete - Detele an expense
 //// list - List all expenses
 // summary - Get a summary of all expenses
