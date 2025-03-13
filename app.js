@@ -45,7 +45,7 @@ program.command('list')
     });
 
 program.command('delete')
-    .description('Delete item')
+    .description('Delete expense')
     .argument('<id>', 'expense id', parseInt)
     .action((id) => {
         if (isNaN(id)) {
@@ -59,7 +59,7 @@ program.command('delete')
             return;
         }
 
-        if (id > result.expenses.length) {
+        if (id >= result.expenses.length) {
             console.error('Expense not found');
             return;
         }
@@ -75,6 +75,39 @@ program.command('delete')
         console.log('Expense deleted succesfully');
     });
 
+program.command('update')
+    .description('Update expense')
+    .argument('<id>', 'Expense id', parseInt)
+    .argument('<description>', 'Name of expense')
+    .argument('<price>', 'Amount paid for expense')
+    .action((id, description, price) => {
+        if (isNaN(id)) {
+            console.log('Id must be a number');
+            return;
+        }
+
+        let result = expenseStorage.readExpenses(FILEPATH);
+        if (result.error) {
+            console.error(result.error);
+            return;
+        }
+
+        let expenses = result.expenses;
+        if (id >= expenses.length) {
+            console.error('Expense not found');
+            return;
+        }
+
+        expenses[id].description = description;
+        expenses[id].price = price;
+
+        result = expenseStorage.writeExpenses(FILEPATH, expenses);
+        if (result.error) {
+            console.error(result.error);
+            return;
+        }
+        console.log('Expense updated succesfully');
+    });
 
 program.parse();
 
