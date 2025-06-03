@@ -118,6 +118,18 @@ program.command('update')
         console.log('Expense updated succesfully');
     });
 
+program.command('summary')
+    .description('Get summary of expenses')
+    .argument('[month]', 'Get summary of a specified month')
+    .action((month) => {
+        if (month) {
+            console.log(`Expenses for ${month}: 200e`);
+        } else {
+            console.log('Total expenses: 1000e');
+        }
+    });
+
+
 program.parse();
 
 //** The Plan */
