@@ -118,6 +118,8 @@ program.command('update')
         console.log('Expense updated succesfully');
     });
 
+// TODO
+// Add this feature
 program.command('summary')
     .description('Get summary of expenses')
     .argument('[month]', 'Get summary of a specified month')
