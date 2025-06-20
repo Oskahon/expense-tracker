@@ -118,17 +118,30 @@ program.command('update')
         console.log('Expense updated succesfully');
     });
 
-// TODO
-// Add this feature
 program.command('summary')
     .description('Get summary of expenses')
     .argument('[month]', 'Get summary of a specified month')
     .action((month) => {
-        if (month) {
-            console.log(`Expenses for ${month}: 200e`);
-        } else {
-            console.log('Total expenses: 1000e');
+        let result = expenseStorage.readExpenses(FILEPATH);
+        if (result.error) {
+            console.error(result.error);
+            return;
         }
+
+        const expenses = result.expenses;
+
+        if (!month) {
+            const sum = expenses.reduce((sum, expense) => sum += expense.price, 0);
+
+            console.log('Total expenses:');
+            console.log(`${sum}€`);
+        } else {
+            const sum = expenses.filter(expense => expense.parseMonth() === month).reduce((sum, expense) => sum += expense.price, 0);
+
+            console.log(`Total expenses for ${month}:`);
+            console.log(`${sum}€`);
+        }
+
     });
 
 
@@ -150,8 +163,8 @@ program.parse();
 //// update - Update an expense
 //// delete - Detele an expense
 //// list - List all expenses
-// summary - Get a summary of all expenses
-// summary -Month <month_number> - get a monthly summary of expenses
+//// summary - Get a summary of all expenses
+//// summary -Month <month_number> - get a monthly summary of expenses
 
 //** Additional features */
 // Expense categories - Add categories to expenses for filtering
